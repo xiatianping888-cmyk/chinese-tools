@@ -1,0 +1,12 @@
+﻿{
+  "rewrites": [
+    { "source": "/translate", "destination": "/translate.html" },
+    { "source": "/translate/", "destination": "/translate.html" },
+    { "source": "/name-generator", "destination": "/name-generator.html" },
+    { "source": "/name-generator/", "destination": "/name-generator.html" },
+    { "source": "/calligraphy", "destination": "/calligraphy.html" },
+    { "source": "/calligraphy/", "destination": "/calligraphy.html" }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
