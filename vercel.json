@@ -24,5 +24,7 @@
       "source": "/calligraphy/",
       "destination": "/calligraphy.html"
     }
-  ]
+  ],
+  "functions": {},
+  "framework": null
 }
