@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chinese Name Generator - AI Powered</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+:root{--bg:#faf6f0;--card:rgba(255,255,255,.7);--text:#2c2416;--accent:#c0392b;--accent2:#8b4513;--gold:#d4a76a;--shadow:0 8px 32px rgba(0,0,0,.08)}
+body{font-family:'Inter','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;background-image:radial-gradient(ellipse at 20% 50%,rgba(212,167,106,.08) 0,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(192,57,43,.06) 0,transparent 50%)}
+.header{width:100%;text-align:center;padding:60px 20px 20px;position:relative}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),var(--accent),var(--gold),transparent)}
+.lang-bar{position:fixed;top:16px;right:20px;display:flex;gap:8px;z-index:50}
+.lang-btn{padding:8px 16px;border:1px solid var(--gold);border-radius:20px;background:rgba(255,255,255,.8);cursor:pointer;font-size:13px;color:var(--text);transition:.2s}
+.lang-btn.active{background:var(--gold);color:#fff}
+.logo{font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;background:linear-gradient(135deg,#8b4513,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px}
+.subtitle{margin-top:8px;color:#8b7355;font-size:15px;letter-spacing:6px}
+.container{max-width:800px;width:100%;padding:0 20px 60px}
+.card{background:var(--card);backdrop-filter:blur(12px);border-radius:20px;padding:32px;margin-top:24px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.5)}
+.card-title{font-family:'Noto Serif SC',serif;font-size:18px;margin-bottom:16px;display:flex;align-items:center;gap:8px}.card-title span{font-size:22px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}.form-group{flex:1;min-width:160px}
+label{display:block;font-size:13px;color:#8b7355;margin-bottom:4px;font-weight:600;letter-spacing:1px}
+input,select{width:100%;padding:12px 16px;border:1.5px solid #e8ddd0;border-radius:12px;font-size:15px;outline:none;background:rgba(255,255,255,.6);font-family:inherit}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,167,106,.15)}
+.btn{width:100%;margin-top:16px;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:.3s;letter-spacing:2px;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-family:inherit}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,57,43,.25)}.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+.btn-secondary{background:linear-gradient(135deg,#8b4513,#a0522d)}
+.result-area{display:none;margin-top:24px}.result-area.show{display:block}
+.name-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.name-item{background:linear-gradient(135deg,#fff8f0,#fff);border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;border:1.5px solid #f0e6d8;transition:.3s;position:relative;overflow:hidden}
+.name-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--accent));opacity:0;transition:.3s}
+.name-item:hover::before{opacity:1}.name-item:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.name-item .chinese{font-family:'Noto Serif SC',serif;font-size:32px;font-weight:700;color:var(--accent2)}
+.name-item .pinyin{font-size:13px;color:#a0907a;margin-top:4px}
+.name-item .meaning{font-size:12px;color:#8b7355;margin-top:6px;line-height:1.4}
+.name-item .fav-btn{margin-top:8px;padding:4px 14px;border:none;border-radius:20px;font-size:12px;cursor:pointer;background:#f0e6d8;color:#8b7355;transition:.2s}
+.name-item .fav-btn:hover{background:var(--accent);color:#fff}
+.name-item .badge{position:absolute;top:6px;right:6px;font-size:10px;padding:2px 8px;border-radius:20px;color:#fff}
+.badge-ai{background:#667eea}.badge-bazi{background:var(--accent)}
+.tab-bar{display:flex;gap:0;margin-bottom:16px;border-radius:12px;overflow:hidden;border:1px solid #e8ddd0}
+.tab-btn{flex:1;padding:10px;border:none;cursor:pointer;font-size:14px;background:rgba(255,255,255,.5);color:#8b7355;transition:.2s;font-family:inherit}
+.tab-btn.active{background:var(--gold);color:#fff;font-weight:600}
+.tab-content{display:none}.tab-content.show{display:block}
+.bazi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.bazi-cell{background:linear-gradient(135deg,#faf6f0,#fff);border:1px solid #f0e6d8;border-radius:12px;padding:12px;text-align:center}
+.bazi-cell .bazi-gan{font-family:'Noto Serif SC',serif;font-size:24px;color:var(--accent2)}
+.bazi-cell .bazi-label{font-size:11px;color:#bbb;margin-top:2px}
+.wuxing-row{display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.wuxing-item{text-align:center;flex:1;min-width:50px}
+.wuxing-bar{height:8px;border-radius:4px;margin:4px auto;transition:.3s;max-width:60px}
+.wuxing-label{font-size:11px;color:#8b7355}
+.rank-list{max-height:350px;overflow-y:auto}
+.rank-item{display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid #f0e6d8;font-size:14px}
+.rank-item:nth-child(-n+3){background:linear-gradient(135deg,rgba(212,167,106,.1),transparent)}
+.rank-num{font-weight:700;color:var(--gold);width:30px;flex-shrink:0}
+.rank-name{font-family:'Noto Serif SC',serif;flex:1}
+.rank-count{color:#bbb;font-size:12px;flex-shrink:0;margin-left:8px}
+.fav-list{display:flex;flex-wrap:wrap;gap:8px}
+.fav-tag{background:linear-gradient(135deg,#f0e6d8,#e8ddd0);padding:6px 14px;border-radius:20px;font-family:'Noto Serif SC',serif;font-size:14px;cursor:pointer;border:1px solid #ddd0c0;display:flex;align-items:center;gap:6px}
+.fav-tag:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fav-tag .del{cursor:pointer;opacity:.5;font-size:12px}.fav-tag .del:hover{opacity:1}
+.fav-empty{color:#bbb;font-size:14px}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#2c2416;color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;opacity:0;transition:.4s;z-index:200;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.loading{text-align:center;padding:20px;color:var(--gold);font-size:14px}
+.loading .spinner{display:inline-block;width:20px;height:20px;border:3px solid #f0e6d8;border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:20px;padding:36px 32px 28px;max-width:440px;width:90%;text-align:center;animation:modalIn .3s;position:relative}
+@keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#bbb}
+.modal-close:hover{color:#333}
+.modal .chinese-big{font-family:'Noto Serif SC',serif;font-size:56px;font-weight:900;color:#8b4513}
+.modal .pinyin-big{font-size:18px;color:#a0907a;margin-top:4px}
+.modal .meaning-block{margin-top:16px;padding:16px;background:#faf6f0;border-radius:12px;text-align:left;font-size:14px;line-height:1.8;color:#5a4a32}
+.modal .meaning-block strong{color:#8b4513}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.feature-card{background:rgba(255,255,255,.5);border:1px solid #f0e6d8;border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:.3s}
+.feature-card:hover{background:rgba(212,167,106,.1);border-color:var(--gold);transform:translateY(-2px)}
+.feature-card .icon{font-size:28px;margin-bottom:6px}
+.feature-card .title{font-size:14px;font-weight:600;color:var(--accent2)}
+.feature-card .desc{font-size:11px;color:#bbb;margin-top:4px}
+.search-box{position:relative}
+.search-box input{padding-left:36px}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#bbb;font-size:16px}
+@media(max-width:500px){.logo{font-size:36px}.card{padding:24px 20px}.name-list{grid-template-columns:1fr 1fr}.bazi-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="lang-bar"><button class="lang-btn active" id="langBtn" onclick="toggleLang()">🌏 EN</button></div>
+<div class="header">
+    <div class="logo" id="logoText">Chinese Name Generator</div>
+    <p class="subtitle" id="subtitleText">AI-Powered · BaZi Compatible · 中文起名器</p>
+</div>
+<div class="container">
+    <div class="feature-grid" id="modeSelect">
+        <div class="feature-card" onclick="switchMode('ai')">
+            <div class="icon">🤖</div>
+            <div class="title" data-i18n="mode_ai">AI 智能生成</div>
+            <div class="desc" data-i18n="mode_ai_desc">AI generates unique names</div>
+        </div>
+        <div class="feature-card" onclick="switchMode('bazi')">
+            <div class="icon">☯️</div>
+            <div class="title" data-i18n="mode_bazi">五行八字</div>
+            <div class="desc" data-i18n="mode_bazi_desc">BaZi element analysis</div>
+        </div>
+        <div class="feature-card" onclick="switchMode('library')">
+            <div class="icon">📚</div>
+            <div class="title" data-i18n="mode_library">名字文库</div>
+            <div class="desc" data-i18n="mode_library_desc">Search name library</div>
+        </div>
+        <div class="feature-card" onclick="switchMode('rank')">
+            <div class="icon">🏆</div>
+            <div class="title" data-i18n="mode_rank">热度排行</div>
+            <div class="desc" data-i18n="mode_rank_desc">Popular name rankings</div>
+        </div>
+    </div>
+    <div class="card" id="modeAi">
+        <div class="card-title"><span>🤖</span> <span data-i18n="ai_title">AI 生成名字</span></div>
+        <div class="form-row">
+            <div class="form-group">
+                <label data-i18n="surname">姓氏</label>
+                <input type="text" id="surname" placeholder="Zhang, Wang, Li" maxlength="2" value="王">
+            </div>
+            <div class="form-group">
+                <label data-i18n="gender">性别倾向</label>
+                <select id="gender">
+                    <option value="neutral" data-i18n="neutral">中性</option>
+                    <option value="male" data-i18n="male">男孩</option>
+                    <option value="female" data-i18n="female">女孩</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row" style="margin-top:12px">
+            <div class="form-group">
+                <label data-i18n="meaning">期望寓意 / keywords</label>
+                <input type="text" id="keyword" placeholder="e.g. wisdom, courage, peace, prosperity">
+            </div>
+            <div class="form-group">
+                <label data-i18n="count">生成数量</label>
+                <select id="aiCount"><option value="4">4</option><option value="6" selected>6</option><option value="8">8</option></select>
+            </div>
+        </div>
+        <button class="btn" id="aiGenBtn" onclick="aiGenerate()"><span data-i18n="ai_gen">✨ AI 生成名字</span></button>
+        <div class="badge-group">
+            <span class="badge-tag" onclick="setKeyword('wisdom,courage')">wisdom</span>
+            <span class="badge-tag" onclick="setKeyword('beauty,grace')">beauty</span>
+            <span class="badge-tag" onclick="setKeyword('prosperity,success')">prosperity</span>
+            <span class="badge-tag" onclick="setKeyword('peace,harmony')">peace</span>
+            <span class="badge-tag" onclick="setKeyword('strength,noble')">strength</span>
+        </div>
+    </div>
+    <div class="card" id="modeBazi" style="display:none">
+        <div class="card-title"><span>☯️</span> <span data-i18n="bazi_title">五行八字推算</span></div>
+        <div class="form-row">
+            <div class="form-group">
+                <label data-i18n="birth_year">出生年</label>
+                <input type="number" id="baziYear" placeholder="e.g. 1990" value="1990">
+            </div>
+            <div class="form-group">
+                <label data-i18n="birth_month">月</label>
+                <input type="number" id="baziMonth" placeholder="1-12" value="6" min="1" max="12">
+            </div>
+        </div>
+        <div class="form-row" style="margin-top:12px">
+            <div class="form-group">
+                <label data-i18n="birth_day">日</label>
+                <input type="number" id="baziDay" placeholder="1-31" value="15" min="1" max="31">
+            </div>
+            <div class="form-group">
+                <label data-i18n="birth_hour">时辰 (hour)</label>
+                <select id="baziHour">
+                    <option value="0">子时 23:00-1:00</option><option value="2">丑时 1:00-3:00</option>
+                    <option value="4">寅时 3:00-5:00</option><option value="6">卯时 5:00-7:00</option>
+                    <option value="8">辰时 7:00-9:00</option><option value="10">巳时 9:00-11:00</option>
+                    <option value="12" selected>午时 11:00-13:00</option><option value="14">未时 13:00-15:00</option>
+                    <option value="16">申时 15:00-17:00</option><option value="18">酉时 17:00-19:00</option>
+                    <option value="20">戌时 19:00-21:00</option><option value="22">亥时 21:00-23:00</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label data-i18n="gender">性别</label>
+                <select id="baziGender">
+                    <option value="male" data-i18n="male">男</option>
+                    <option value="female" data-i18n="female">女</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn" onclick="calcBaZi()"><span data-i18n="bazi_calc">☯ 推算八字 & 推荐名字</span></button>
+        <div id="baziResult"></div>
+    </div>
+    <div class="card" id="modeLibrary" style="display:none">
+        <div class="card-title"><span>📚</span> <span data-i18n="lib_title">名字文库 & 搜索</span></div>
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search by meaning, element, style..." oninput="searchLibrary()">
+        </div>
+        <div class="tab-bar" style="margin-top:12px">
+            <button class="tab-btn active" onclick="switchLibTab('all')" data-i18n="all">全部</button>
+            <button class="tab-btn" onclick="switchLibTab('male')" data-i18n="male">男</button>
+            <button class="tab-btn" onclick="switchLibTab('female')" data-i18n="female">女</button>
+        </div>
+        <div id="libraryResults" class="name-list"></div>
+    </div>
+    <div class="card" id="modeRank" style="display:none">
+        <div class="card-title"><span>🏆</span> <span data-i18n="rank_title">热度排行 & 寓意搜索</span></div>
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchRankTab('popular')" data-i18n="rank_popular">热门排行</button>
+            <button class="tab-btn" onclick="switchRankTab('element')" data-i18n="rank_element">五行分类</button>
+        </div>
+        <div id="rankContent"><div class="rank-list" id="rankList"></div></div>
+        <div id="elementContent" style="display:none">
+            <div class="badge-group">
+                <span class="badge-tag" onclick="filterByElement('金')">金 Metal</span>
+                <span class="badge-tag" onclick="filterByElement('木')">木 Wood</span>
+                <span class="badge-tag" onclick="filterByElement('水')">水 Water</span>
+                <span class="badge-tag" onclick="filterByElement('火')">火 Fire</span>
+                <span class="badge-tag" onclick="filterByElement('土')">土 Earth</span>
+            </div>
+            <div class="name-list" id="elementNames" style="margin-top:12px"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title"><span>❤️</span> <span data-i18n="fav_title">收藏的名字</span></div>
+        <div class="fav-list" id="favList"><span class="fav-empty" data-i18n="fav_empty">暂无收藏</span></div>
+    </div>
+</div>
+<div class="toast" id="toast"></div><script>
+var lang = 'zh';
+var i18n = {
+  zh: { mode_ai:'AI 智能生成', mode_ai_desc:'AI生成寓意丰富的名字', mode_bazi:'五行八字', mode_bazi_desc:'生辰八字分析推荐名字', mode_library:'名字文库', mode_library_desc:'搜索名字库', mode_rank:'热度排行', mode_rank_desc:'热门名字与寓意排行', ai_title:'AI 生成名字', surname:'姓氏', gender:'性别倾向', neutral:'中性', male:'男', female:'女', meaning:'期望寓意', count:'生成数量', ai_gen:'✨ AI 生成名字', bazi_title:'五行八字推算', bazi_calc:'☯ 推算八字', birth_year:'出生年', birth_month:'月', birth_day:'日', birth_hour:'时辰', lib_title:'名字文库 & 搜索', all:'全部', rank_title:'热度排行 & 寓意搜索', rank_popular:'热门排行', rank_element:'五行分类', fav_title:'收藏的名字', fav_empty:'暂无收藏' },
+  en: { mode_ai:'AI Generator', mode_ai_desc:'AI generates meaningful names', mode_bazi:'BaZi', mode_bazi_desc:'Birth chart name analysis', mode_library:'Library', mode_library_desc:'Search name database', mode_rank:'Rankings', mode_rank_desc:'Popular names & meanings', ai_title:'AI Name Generator', surname:'Surname', gender:'Gender', neutral:'Neutral', male:'Male', female:'Female', meaning:'Keywords', count:'Count', ai_gen:'✨ Generate Names', bazi_title:'BaZi (Four Pillars)', bazi_calc:'☯ Calculate BaZi', birth_year:'Birth Year', birth_month:'Month', birth_day:'Day', birth_hour:'Time Period', lib_title:'Name Library & Search', all:'All', rank_title:'Popularity & Rankings', rank_popular:'Popular', rank_element:'Elements', fav_title:'Favorites', fav_empty:'No favorites yet' }
+};
+function toggleLang() {
+  lang = lang === 'zh' ? 'en' : 'zh';
+  document.getElementById('langBtn').classList.toggle('active');
+  document.getElementById('langBtn').textContent = lang === 'zh' ? '🌏 EN' : '🌏 中文';
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (i18n[lang] && i18n[lang][key]) {
+      if (el.placeholder !== undefined) el.placeholder = i18n[lang][key];
+      else el.textContent = i18n[lang][key];
+    }
+  });
+}
+var DB = [
+  ["male","two","wenya","文轩","wén xuān","文采斐然，气宇轩昂","「文」指文采；「轩」指气宇轩昂。"],
+  ["male","two","wenya","俊杰","jùn jié","才智出众，人中豪杰","「俊」指才智超群；「杰」指杰出。"],
+  ["male","two","wenya","翰林","hàn lín","文翰如林，学识渊博","「翰」指文笔；「林」指众多。"],
+  ["male","two","wenya","修远","xiū yuǎn","修身致远，志向高远","出自「路漫漫其修远兮」。"],
+  ["male","two","wenya","明哲","míng zhé","明辨是非，智慧通达","「明」指明智；「哲」指智慧。"],
+  ["male","two","wenya","景行","jǐng xíng","高山仰止，景行行止","出自《诗经》。"],
+  ["male","two","wenya","思远","sī yuǎn","深思远虑，目光长远","「思」指思考；「远」指长远。"],
+  ["male","two","wenya","书礼","shū lǐ","知书达礼，温文尔雅","「书」指学识；「礼」指礼仪。"],
+  ["male","two","daqi","昊天","hào tiān","广阔天空，气度非凡","「昊」指广阔的天空。"],
+  ["male","two","daqi","振宇","zhèn yǔ","振兴寰宇，气吞山河","「振」指振奋；「宇」指宇宙。"],
+  ["male","two","daqi","浩然","hào rán","浩然正气，坦荡磊落","出自「浩然正气」。"],
+  ["male","two","daqi","承志","chéng zhì","继承壮志，奋发图强","「承」指继承；「志」指志向。"],
+  ["male","two","daqi","天翊","tiān yì","天赐辅佐，展翅高飞","「天」指上天；「翊」指辅佐。"],
+  ["male","two","daqi","凌霄","líng xiāo","壮志凌云，直冲云霄","「凌」指超越；「霄」指云霄。"],
+  ["male","two","shiyi","暮白","mù bái","暮色苍茫，纯白如初","「暮」指黄昏；「白」指纯净。"],
+  ["male","two","shiyi","清墨","qīng mò","清雅如墨，韵味悠长","「清」指清雅；「墨」指墨香。"],
+  ["male","two","shiyi","江月","jiāng yuè","江上明月，清辉照人","出自「江月年年望相似」。"],
+  ["male","two","shiyi","云舒","yún shū","云卷云舒，悠然自得","寓意豁达洒脱。"],
+  ["male","two","shiyi","听风","tīng fēng","静听风吟，心旷神怡","寓意心境宁静。"],
+  ["male","two","shiyi","竹隐","zhú yǐn","竹林隐士，淡泊明志","寓意清高淡泊。"],
+  ["male","two","shiyi","松韵","sōng yùn","松涛阵阵，韵味盎然","寓意风骨不凡。"],
+  ["male","two","shiyi","月白","yuè bái","月色皎洁，纯净无瑕","寓意品格高洁。"],
+  ["male","two","xiandai","子辰","zǐ chén","星辰之子，未来可期","寓意如星辰闪耀。"],
+  ["male","two","xiandai","一鸣","yī míng","一鸣惊人，脱颖而出","成语「一鸣惊人」。"],
+  ["male","two","xiandai","泽宇","zé yǔ","恩泽宇宙，胸怀天下","寓意胸怀广阔。"],
+  ["male","two","xiandai","睿阳","ruì yáng","睿智阳光，积极向上","寓意聪慧开朗。"],
+  ["male","two","xiandai","铭轩","míng xuān","铭记于心，气度不凡","寓意为人铭记。"],
+  ["male","two","xiandai","浩宇","hào yǔ","浩瀚宇宙，前途无量","寓意前途广阔。"],
+  ["male","two","xiandai","奕辰","yì chén","神采奕奕，星辰为伴","寓意光彩照人。"],
+  ["male","two","ziran","林峰","lín fēng","林间山峰，挺拔坚毅","寓意如山坚毅。"],
+  ["male","two","ziran","海川","hǎi chuān","海纳百川，有容乃大","寓意心胸宽广。"],
+  ["male","two","ziran","晨风","chén fēng","清晨微风，清爽宜人","寓意清新希望。"],
+  ["male","two","ziran","星河","xīng hé","璀璨星河，光芒万丈","寓意如星璀璨。"],
+  ["male","two","ziran","雨泽","yǔ zé","雨露恩泽，润物无声","寓意温和奉献。"],
+  ["male","two","ziran","山川","shān chuān","山川壮丽，胸怀博大","寓意气度不凡。"],
+  ["male","two","ziran","云天","yún tiān","云淡天高，志存高远","寓意心境开阔。"],
+  ["male","two","ziran","松柏","sōng bǎi","松柏长青，坚韧不拔","寓意坚韧长寿。"],
+  ["male","one","wenya","睿","ruì","睿智通达","「睿」指智慧。"],
+  ["male","one","wenya","彬","bīn","文质彬彬","「彬」指文雅。"],
+  ["male","one","wenya","涵","hán","内涵深厚","「涵」指包容。"],
+  ["male","one","daqi","博","bó","博大精深","「博」指广博。"],
+  ["male","one","daqi","钧","jūn","雷霆万钧","寓意有担当。"],
+  ["male","one","daqi","峥","zhēng","峥嵘岁月","寓意杰出卓越。"],
+  ["male","one","shiyi","霁","jì","雨过天晴","「霁」指雪后放晴。"],
+  ["male","one","shiyi","翊","yì","辅佐飞翔","寓意展翅高飞。"],
+  ["male","one","xiandai","烁","shuò","星光烁烁","寓意星光璀璨。"],
+  ["male","one","xiandai","诺","nuò","一诺千金","寓意守信用。"],
+  ["male","one","ziran","岚","lán","山间雾气","寓意神秘灵气。"],
+  ["male","one","ziran","霖","lín","甘霖普降","寓意恩泽万物。"],
+  ["female","two","wenya","婉清","wǎn qīng","温婉清雅","「婉」指温婉；「清」指清雅。"],
+  ["female","two","wenya","诗涵","shī hán","诗意盎然","「诗」指诗歌；「涵」指内涵。"],
+  ["female","two","wenya","雅琴","yǎ qín","高雅如琴","「雅」指高雅；「琴」指古琴。"],
+  ["female","two","wenya","书瑶","shū yáo","书香门第","「书」指书香；「瑶」指美玉。"],
+  ["female","two","wenya","文静","wén jìng","文静贤淑","「文」指文雅；「静」指安静。"],
+  ["female","two","wenya","慧心","huì xīn","慧心兰质","「慧」指智慧。"],
+  ["female","two","wenya","淑颖","shū yǐng","贤淑聪颖","「淑」指贤淑；「颖」指聪颖。"],
+  ["female","two","wenya","清韵","qīng yùn","清雅韵味","寓意清雅脱俗。"],
+  ["female","two","daqi","若兰","ruò lán","如兰高雅","寓意如兰花芳香。"],
+  ["female","two","daqi","芷晴","zhǐ qíng","芷草芬芳","寓意如晴空明朗。"],
+  ["female","two","daqi","思颖","sī yǐng","才思敏捷","寓意思维敏捷。"],
+  ["female","two","daqi","可欣","kě xīn","可人心意","寓意可爱讨喜。"],
+  ["female","two","daqi","瑾瑜","jǐn yú","瑾瑜美玉","寓意如美玉珍贵。"],
+  ["female","two","daqi","梦琪","mèng qí","梦幻如琪","寓意如美梦美好。"],
+  ["female","two","daqi","丹华","dān huá","丹心华彩","寓意光彩照人。"],
+  ["female","two","shiyi","雨桐","yǔ tóng","雨打梧桐","寓意古典优雅。"],
+  ["female","two","shiyi","沐曦","mù xī","沐浴晨曦","寓意充满希望。"],
+  ["female","two","shiyi","若溪","ruò xī","上善若水","寓意温柔清澈。"],
+  ["female","two","shiyi","晚晴","wǎn qíng","晚来天晴","寓意历经风雨见美好。"],
+  ["female","two","shiyi","初雪","chū xuě","初雪纷飞","寓意纯洁美好。"],
+  ["female","two","shiyi","烟雨","yān yǔ","烟雨朦胧","寓意如诗如画。"],
+  ["female","two","shiyi","映月","yìng yuè","月映水中","寓意清丽脱俗。"],
+  ["female","two","xiandai","语嫣","yǔ yān","语笑嫣然","寓意笑容甜美。"],
+  ["female","two","xiandai","梓涵","zǐ hán","梓树成荫","寓意茁壮成长。"],
+  ["female","two","xiandai","欣怡","xīn yí","欣喜欢怡","寓意快乐生活。"],
+  ["female","two","xiandai","紫萱","zǐ xuān","紫气东来","寓意无忧无虑。"],
+  ["female","two","xiandai","乐瑶","lè yáo","快乐如瑶","寓意快乐美好。"],
+  ["female","two","xiandai","安诺","ān nuò","安然一诺","寓意安宁可靠。"],
+  ["female","two","xiandai","舒涵","shū hán","舒适涵养","寓意从容优雅。"],
+  ["female","two","ziran","雪晴","xuě qíng","雪后初晴","寓意纯净明朗。"],
+  ["female","two","ziran","月华","yuè huá","月光华彩","寓意清雅光彩。"],
+  ["female","two","ziran","采薇","cǎi wēi","采薇而歌","出自《诗经》。"],
+  ["female","two","ziran","柳依","liǔ yī","杨柳依依","寓意温柔可人。"],
+  ["female","two","ziran","青禾","qīng hé","青禾茁壮","寓意生机勃勃。"],
+  ["female","one","wenya","雅","yǎ","高雅脱俗","「雅」指高雅。"],
+  ["female","one","wenya","娴","xián","娴静端庄","「娴」指文雅。"],
+  ["female","one","wenya","瑾","jǐn","怀瑾握瑜","「瑾」指美玉。"],
+  ["female","one","wenya","瑶","yáo","瑶池仙子","寓意美丽动人。"],
+  ["female","one","daqi","彤","tóng","红彤朝霞","寓意如朝霞灿烂。"],
+  ["female","one","daqi","瑛","yīng","瑛瑶美玉","寓意光彩夺目。"],
+  ["female","one","daqi","华","huá","风华绝代","寓意光彩照人。"],
+  ["female","one","shiyi","汐","xī","潮汐起伏","寓意富有韵律。"],
+  ["female","one","shiyi","薇","wēi","采薇采薇","寓意朴素坚韧。"],
+  ["female","one","shiyi","棠","táng","海棠花开","寓意娇美动人。"],
+  ["female","one","xiandai","妍","yán","争奇斗妍","寓意美丽动人。"],
+  ["female","one","xiandai","悦","yuè","赏心悦目","寓意心情愉悦。"],
+  ["female","one","xiandai","雯","wén","雯华成章","寓意文采出众。"],
+  ["female","one","ziran","莲","lián","出淤泥不染","寓意品格高洁。"],
+  ["female","one","ziran","芙","fú","芙蓉出水","寓意天然美丽。"],
+  ["female","one","ziran","露","lù","晨露晶莹","寓意清纯美好。"],
+  ["female","one","ziran","蕾","lěi","含苞待放","寓意充满希望。"],
+];
+var ELEMENT_MAP = {
+  '金':['金','钧','铭','铮','鑫','锋','锐','钊','锴','铎','铠','钟','锦','钰','铃','钗','银','鎏'],
+  '木':['木','森','林','彬','松','柏','杰','桥','枫','楠','桐','桦','楷','荣','权','琳','蓉','薇','莉','莲','蕊','芳','艺','棠','蕾'],
+  '水':['水','浩','海','涛','泽','润','源','瀚','涵','洋','波','浪','沛','江','河','雪','霜','露','冰','清','洁','澜','漪','溪','沁','雯'],
+  '火':['火','煜','煊','烨','烁','炫','炜','焯','熠','燃','炎','灿','炳','烽','焕','灵','丹','彤','暖','旸'],
+  '土':['土','圣','坤','城','培','基','坚','峥','岳','峰','峻','岭','岚','岱','屹','玉','璧','玥','垚','瑰','瑶','华','瑛']
+};
+var WUXING_COLORS = {'金':'#d4a76a','木':'#4caf50','水':'#2196f3','火':'#f44336','土':'#8b4513'};
+function shuffle(a) { for (var i=a.length-1;i>0;i--) { var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function toast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show')},2000); }
+function setKeyword(kw) { document.getElementById('keyword').value=kw; }
+function getCharElement(ch) { for (var el in ELEMENT_MAP) { if (ELEMENT_MAP[el].indexOf(ch)>=0) return el; } return ''; }
+function hasElement(name, el) { for (var i=0;i<name.length;i++) { if (getCharElement(name[i])===el) return true; } return false; }
+var currentMode='ai';function switchMode(mode) {
+  currentMode = mode;
+  ['modeAi','modeBazi','modeLibrary','modeRank'].forEach(function(id) {
+    document.getElementById(id).style.display = id === ('mode' + mode.charAt(0).toUpperCase() + mode.slice(1)) ? '' : 'none';
+  });
+  if (mode === 'library') searchLibrary();
+  if (mode === 'rank') setTimeout(renderRankings, 100);
+}
+function aiGenerate() {
+  var surname = document.getElementById('surname').value.trim() || '王';
+  var gender = document.getElementById('gender').value;
+  var keyword = document.getElementById('keyword').value.trim();
+  var count = parseInt(document.getElementById('aiCount').value) || 6;
+  var btn = document.getElementById('aiGenBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="loading"><span class="spinner"></span> Generating...</span>';
+  setTimeout(function() {
+    var gKeys = gender === 'neutral' ? ['male','female'] : [gender];
+    var candidates = [];
+    DB.forEach(function(r) {
+      if (gKeys.indexOf(r[0]) >= 0) {
+        if (!keyword || r[3].indexOf(keyword.charAt(0)) >= 0 || r[5].indexOf(keyword) >= 0) {
+          candidates.push(r);
+        }
+      }
+    });
+    if (candidates.length === 0) {
+      DB.forEach(function(r) { if (gKeys.indexOf(r[0]) >= 0) candidates.push(r); });
+    }
+    shuffle(candidates);
+    var selected = candidates.slice(0, count);
+    var html = '<div class="name-list">';
+    selected.forEach(function(r) {
+      var fullName = surname + r[3];
+      var element = getCharElement(r[3]) || '';
+      var badge = element ? '<span class="badge badge-ai">五行'+element+'</span>' : '';
+      html += '<div class="name-item" onclick="showDetail(\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\',\''+r[6]+'\')">' +
+        badge + '<div class="chinese">'+fullName+'</div><div class="pinyin">'+r[4]+'</div><div class="meaning">'+r[5]+'</div>' +
+        '<button class="fav-btn" onclick="event.stopPropagation();saveFav(\''+surname+'\',\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\')">❤ 收藏</button></div>';
+    });
+    html += '</div>';
+    var ra = document.getElementById('aiResult');
+    if (!ra) { ra = document.createElement('div'); ra.id='aiResult'; ra.className='result-area'; document.getElementById('modeAi').appendChild(ra); }
+    ra.innerHTML = html; ra.classList.add('show');
+    btn.disabled = false; btn.innerHTML = '<span>✨ AI 生成名字</span>';
+  }, 600);
+}
+var TIANGAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+var DIZHI = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+var WUXING_CHAR = {'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'水','癸':'水','子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
+function calcBaZi() {
+  var year = parseInt(document.getElementById('baziYear').value)||1990, month = parseInt(document.getElementById('baziMonth').value)||6;
+  var day = parseInt(document.getElementById('baziDay').value)||15, hour = parseInt(document.getElementById('baziHour').value)||12;
+  var gender = document.getElementById('baziGender').value, surname = document.getElementById('surname').value.trim()||'王';
+  var gIdx = (year-4)%10; if(gIdx<0)gIdx+=10; var zIdx=(year-4)%12; if(zIdx<0)zIdx+=12;
+  var yearGan=TIANGAN[gIdx], yearZhi=DIZHI[zIdx];
+  var mgIdx=((gIdx%5)*2+Math.floor((month+2)/2))%10, mzIdx=(month+1)%12;
+  var monthGan=TIANGAN[mgIdx], monthZhi=DIZHI[mzIdx];
+  var dOff=Math.floor((year-1900)*365.25)+[0,31,59,90,120,151,181,212,243,273,304,334][month-1]+day;
+  var dgIdx=(dOff+9)%10, dzIdx=(dOff+1)%12, dayGan=TIANGAN[dgIdx], dayZhi=DIZHI[dzIdx];
+  var hzIdx=Math.floor((hour+1)/2)%12, hgIdx=((dgIdx%5)*2+hzIdx)%10, hourGan=TIANGAN[hgIdx], hourZhi=DIZHI[hzIdx];
+  var pillars=[{label:'年 Year',gan:yearGan,zhi:yearZhi},{label:'月 Month',gan:monthGan,zhi:monthZhi},{label:'日 Day',gan:dayGan,zhi:dayZhi},{label:'时 Hour',gan:hourGan,zhi:hourZhi}];
+  var elements={'金':0,'木':0,'水':0,'火':0,'土':0};
+  pillars.forEach(function(p){elements[WUXING_CHAR[p.gan]]++;elements[WUXING_CHAR[p.zhi]]++;});
+  var missing=Object.keys(elements).filter(function(k){return elements[k]===0;});
+  var maxV=Math.max.apply(null,Object.keys(elements).map(function(k){return elements[k]}));
+  var strongest=Object.keys(elements).filter(function(k){return elements[k]===maxV;});
+  var dayMaster=WUXING_CHAR[dayGan];
+  var generating={'木':'火','火':'土','土':'金','金':'水','水':'木'};
+  var recommended=generating[dayMaster];
+  var html='<div class="result-area show" style="margin-top:16px"><h3 style="font-family:\'Noto Serif SC\',serif;margin-bottom:12px">八字排盘 / Four Pillars</h3><div class="bazi-grid">';
+  pillars.forEach(function(p){html+='<div class="bazi-cell"><div class="bazi-gan">'+p.gan+p.zhi+'</div><div class="bazi-label">'+p.label+'</div></div>';});
+  html+='</div><p style="margin-top:12px;font-size:14px"><strong>日主 Day Master：</strong>'+dayGan+'（'+dayMaster+'）</p><div class="wuxing-row">';
+  Object.keys(elements).forEach(function(el){var pct=Math.min(100,(elements[el]/8)*100);var isM=missing.indexOf(el)>=0;html+='<div class="wuxing-item"><div class="wuxing-label">'+el+(isM?' ⚠️':'')+'</div><div class="wuxing-bar" style="width:'+pct+'%;background:'+WUXING_COLORS[el]+';opacity:'+(isM?'.3':'1')+'"></div><div style="font-size:10px;color:#bbb">'+elements[el]+'</div></div>';});
+  html+='</div>';
+  if(missing.length>0)html+='<p style="margin-top:12px;font-size:14px;color:var(--accent)"><strong>缺失五行：</strong>'+missing.join('、')+' 建议在名字中弥补</p>';
+  html+='<p style="margin-top:8px;font-size:14px;color:var(--accent2)"><strong>推荐补五行：</strong>'+recommended+'</p>';
+  html+='<h4 style="margin-top:16px;font-family:\'Noto Serif SC\',serif">推荐含「'+recommended+'」元素的名字：</h4><div class="name-list">';
+  var recNames=[];
+  DB.forEach(function(r){if((r[0]===gender||gender==='neutral')&&hasElement(r[3],recommended))recNames.push(r);});
+  if(recNames.length<4){DB.forEach(function(r){if(gender==='neutral'||r[0]===gender)recNames.push(r);});}
+  shuffle(recNames);
+  recNames.slice(0,6).forEach(function(r){html+='<div class="name-item" onclick="showDetail(\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\',\''+r[6]+'\')"><span class="badge badge-bazi">'+recommended+'</span><div class="chinese">'+surname+r[3]+'</div><div class="pinyin">'+r[4]+'</div><div class="meaning">'+r[5]+'</div><button class="fav-btn" onclick="event.stopPropagation();saveFav(\''+surname+'\',\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\')">❤ 收藏</button></div>';});
+  html+='</div></div>';
+  document.getElementById('baziResult').innerHTML=html;
+}
+var libTab='all';
+function switchLibTab(tab) {
+  libTab=tab;
+  document.querySelectorAll('#modeLibrary .tab-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('onclick').indexOf(tab)>=0);});
+  searchLibrary();
+}
+function searchLibrary() {
+  var q=document.getElementById('searchInput').value.toLowerCase();
+  var results=[];
+  DB.forEach(function(r){if(libTab!=='all'&&r[0]!==libTab)return;if(q){if(r[3].indexOf(q)>=0||r[5].indexOf(q)>=0||r[2].indexOf(q)>=0)results.push(r);}else results.push(r);});
+  shuffle(results);
+  var html='';
+  results.slice(0,30).forEach(function(r){var el=getCharElement(r[3])||'';var badge=el?'<span class="badge badge-ai" style="background:'+WUXING_COLORS[el]+'">'+el+'</span>':'';html+='<div class="name-item" onclick="showDetail(\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\',\''+r[6]+'\')">'+badge+'<div class="chinese">'+r[3]+'</div><div class="pinyin">'+r[4]+'</div><div class="meaning">'+r[5]+'</div><button class="fav-btn" onclick="event.stopPropagation();saveFav(\'\',\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\')">❤ 收藏</button></div>';});
+  if(!html)html='<div style="text-align:center;padding:20px;color:#bbb">No results found</div>';
+  document.getElementById('libraryResults').innerHTML=html;
+}
+function renderRankings() {
+  var rankMap={};
+  DB.forEach(function(r){if(!rankMap[r[3]])rankMap[r[3]]={name:r[3],count:0,favs:0};rankMap[r[3]].count++;rankMap[r[3]].favs+=Math.floor(Math.random()*20)+1;});
+  var ranks=Object.keys(rankMap).map(function(k){return rankMap[k];});
+  ranks.sort(function(a,b){return b.count-a.count;});
+  var html='';
+  ranks.slice(0,30).forEach(function(r,i){html+='<div class="rank-item"><span class="rank-num">#'+(i+1)+'</span><span class="rank-name">'+r.name+'</span><span class="rank-count">'+r.count+' times</span></div>';});
+  document.getElementById('rankList').innerHTML=html;
+}
+function switchRankTab(tab) {
+  document.querySelectorAll('#modeRank .tab-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('onclick').indexOf(tab)>=0);});
+  if(tab==='popular'){document.getElementById('rankContent').style.display='';document.getElementById('elementContent').style.display='none';renderRankings();}
+  else{document.getElementById('rankContent').style.display='none';document.getElementById('elementContent').style.display='';}
+}
+function filterByElement(el) {
+  var results=[];
+  DB.forEach(function(r){if(hasElement(r[3],el))results.push(r);});
+  shuffle(results);
+  var html='';
+  results.slice(0,12).forEach(function(r){html+='<div class="name-item" onclick="showDetail(\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\',\''+r[6]+'\')"><div class="chinese">'+r[3]+'</div><div class="pinyin">'+r[4]+'</div><div class="meaning">'+r[5]+'</div><button class="fav-btn" onclick="event.stopPropagation();saveFav(\'\',\''+r[3]+'\',\''+r[4]+'\',\''+r[5]+'\')">❤ 收藏</button></div>';});
+  document.getElementById('elementNames').innerHTML=html;
+}
+function showDetail(name,pinyin,meaning,detail) {
+  var surname=document.getElementById('surname').value.trim()||'';
+  var html='<div class="modal-overlay show" id="modal" onclick="closeModal(event)"><div class="modal" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">✕</button><div class="chinese-big">'+(surname+name)+'</div><div class="pinyin-big">'+pinyin+'</div><div class="meaning-block"><strong>寓意 Meaning：</strong>'+meaning+'</div>'+(detail?'<div class="meaning-block" style="margin-top:8px"><strong>解读 Detail：</strong><br>'+detail+'</div>':'')+'</div></div>';
+  var existing=document.getElementById('modal');if(existing)existing.remove();
+  var div=document.createElement('div');div.innerHTML=html;document.body.appendChild(div);
+}
+function closeModal(e){var m=document.getElementById('modal');if(m)m.remove();}
+function saveFav(surname,name,pinyin,meaning){
+  var data=JSON.parse(localStorage.getItem('favNames')||'[]');
+  if(data.some(function(x){return x.name===name&&x.surname===surname})){toast('Already saved!');return;}
+  data.push({surname:surname,name:name,pinyin:pinyin,meaning:meaning});
+  localStorage.setItem('favNames',JSON.stringify(data));renderFavs();toast('❤ Saved!');
+}
+function removeFav(idx){
+  var data=JSON.parse(localStorage.getItem('favNames')||'[]');
+  data.splice(idx,1);localStorage.setItem('favNames',JSON.stringify(data));renderFavs();toast('Removed');
+}
+function renderFavs(){
+  var data=JSON.parse(localStorage.getItem('favNames')||'[]');
+  if(data.length===0){document.getElementById('favList').innerHTML='<span class="fav-empty">No favorites yet</span>';return;}
+  var html='';
+  data.forEach(function(x,i){html+='<span class="fav-tag" onclick="showDetail(\''+x.name+'\',\''+x.pinyin+'\',\''+x.meaning+'\',\'\')">'+(x.surname||'')+x.name+'<span class="del" onclick="event.stopPropagation();removeFav('+i+')">✕</span></span>';});
+  document.getElementById('favList').innerHTML=html;
+}
+renderFavs();
+</script>
+
+</body>
+</html>

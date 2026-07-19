@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Redirecting...</title>
+<script>
+(function() {
+  var base = "/chinese-tools";
+  var path = window.location.pathname;
+  
+  // Remove base path
+  if (path.startsWith(base + "/")) {
+    path = path.substring(base.length);
+  } else if (path === base) {
+    path = "";
+  }
+  
+  // Map to the correct HTML file
+  var pageMap = {
+    "/translate": "/chinese-tools/translate.html",
+    "/translate/": "/chinese-tools/translate.html",
+    "/name-generator": "/chinese-tools/name-generator.html",
+    "/name-generator/": "/chinese-tools/name-generator.html",
+    "/calligraphy": "/chinese-tools/calligraphy.html",
+    "/calligraphy/": "/chinese-tools/calligraphy.html",
+    "": "/chinese-tools/index.html",
+    "/": "/chinese-tools/index.html"
+  };
+  
+  var target = pageMap[path] || "/chinese-tools/index.html";
+  
+  // Don"t redirect if we"re already on the right page
+  if (window.location.pathname !== target) {
+    window.location.replace(target);
+  }
+})();
+</script>
+</head>
+<body><p>Redirecting... <a href="/chinese-tools/">Home</a></p></body>
+</html>

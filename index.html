@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chinese Name Generator & Calligraphy Worksheets | AI Baby Naming & Handwriting Practice</title>
+<meta name="description" content="Create unique Chinese names with AI + BaZi analysis. Generate printable Tianzige calligraphy worksheets from English. Loved by parents and teachers worldwide.">
+<meta name="keywords" content="Chinese name generator, baby Chinese name, BaZi name analysis, Chinese calligraphy practice, Tianzige worksheet, English to Chinese tracing, write Chinese characters, HSK writing practice">
+<meta property="og:title" content="Chinese Name Generator & Calligraphy Worksheets">
+<meta property="og:description" content="AI-powered Chinese naming and calligraphy worksheet generation.">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Serif+SC:wght@400;700;900&family=Ma+Shan+Zheng&display=swap');
+:root{--bg:#faf6f0;--text:#2c2416;--accent:#c0392b;--accent2:#8b4513;--gold:#d4a76a;--shadow:0 8px 32px rgba(0,0,0,.08);--radius:16px;--max-w:1200px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.section{padding:80px 0}
+.section-title{text-align:center;font-size:36px;font-weight:800;margin-bottom:16px;letter-spacing:-1px}
+.section-sub{text-align:center;color:#8b7355;font-size:16px;max-width:600px;margin:0 auto 48px;line-height:1.6}
+.section-label{text-align:center;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px}
+.nav{position:sticky;top:0;z-index:100;background:rgba(250,246,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--max-w);margin:0 auto}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Noto Serif SC',serif;font-size:20px;font-weight:900;color:var(--accent2);text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text)}
+.nav-links a:hover{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.btn-trial{padding:10px 20px;border-radius:30px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:.3s;background:transparent;color:var(--accent2);border:1.5px solid var(--gold);font-family:inherit}
+.btn-trial:hover{background:var(--gold);color:#fff}
+.btn-premium{padding:10px 24px;border-radius:30px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:.3s;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-family:inherit}
+.btn-premium:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,57,43,.25)}
+.hero{padding:60px 0 80px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.hero-card{border-radius:24px;padding:40px 32px 36px;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.5);transition:.3s;position:relative;overflow:hidden}
+.hero-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.1)}
+.hero-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+.hero-card.card-name::before{background:linear-gradient(90deg,var(--gold),var(--accent))}
+.hero-card.card-calligraphy::before{background:linear-gradient(90deg,#4caf50,#2196f3)}
+.hero-card .card-icon{font-size:40px;margin-bottom:12px}
+.hero-card h2{font-size:24px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.hero-card .card-desc{font-size:14px;color:#8b7355;line-height:1.7;margin-bottom:16px}
+.hero-card .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-right:6px;margin-bottom:6px}
+.tag-hot{background:rgba(192,57,43,.1);color:var(--accent)}
+.tag-new{background:rgba(76,175,80,.1);color:#4caf50}
+.tag-popular{background:rgba(212,167,106,.15);color:var(--accent2)}
+.hero-card .card-btn{display:inline-block;margin-top:16px;padding:12px 32px;border-radius:30px;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:.3s;color:#fff;font-family:inherit}
+.card-name .card-btn{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+.card-calligraphy .card-btn{background:linear-gradient(135deg,#8b4513,#a0522d)}
+.hero-card .card-btn:hover{transform:scale(1.04);box-shadow:0 8px 25px rgba(0,0,0,.12)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:rgba(255,255,255,.5);border-radius:var(--radius);padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,.4);transition:.3s}
+.feature-card:hover{background:rgba(255,255,255,.8);transform:translateY(-3px);box-shadow:var(--shadow)}
+.feature-card .f-icon{font-size:36px;margin-bottom:12px}
+.feature-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:14px;color:#8b7355;line-height:1.6}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.demo-card{background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid #f0e6d8}
+.demo-card .demo-label{font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:12px}
+.demo-placeholder{background:linear-gradient(135deg,#fff8f0,#faf6f0);border-radius:12px;padding:36px 24px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px dashed #e8ddd0}
+.demo-placeholder p{font-size:13px;color:#bbb}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pricing-card{background:#fff;border-radius:var(--radius);padding:36px 28px;text-align:center;box-shadow:var(--shadow);border:1px solid #f0e6d8;position:relative;transition:.3s}
+.pricing-card.featured{transform:scale(1.04);border-color:var(--gold);box-shadow:0 16px 48px rgba(212,167,106,.2)}
+.pricing-card.featured::before{content:"MOST POPULAR";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;padding:4px 20px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px}
+.pricing-card h3{font-size:20px;font-weight:700;margin-bottom:16px}
+.pricing-card .price{font-size:48px;font-weight:800;color:var(--accent2)}
+.pricing-card .price span{font-size:16px;font-weight:400;color:#bbb}
+.pricing-card .perks{list-style:none;margin:24px 0;text-align:left}
+.pricing-card .perks li{padding:8px 0;font-size:14px;color:#8b7355;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0e6d8}
+.pricing-card .perks li:last-child{border:none}
+.pricing-card .perks li::before{content:"\2713";color:var(--gold);font-weight:700}
+.pricing-card .buy-btn{width:100%;padding:14px;border-radius:30px;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:.3s;font-family:inherit}
+.pricing-card .buy-btn.primary{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff}
+.pricing-card .buy-btn.outline{background:transparent;border:1.5px solid var(--gold);color:var(--accent2)}
+.pricing-card .buy-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.1)}
+.users-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.user-card{background:rgba(255,255,255,.5);border-radius:var(--radius);padding:28px 20px;text-align:center;border:1px solid rgba(255,255,255,.4);transition:.3s}
+.user-card:hover{background:rgba(255,255,255,.8);transform:translateY(-3px)}
+.user-card .u-icon{font-size:36px;margin-bottom:10px}
+.user-card h4{font-size:16px;font-weight:700;margin-bottom:6px}
+.user-card p{font-size:13px;color:#8b7355;line-height:1.5}
+.lead-capture{background:linear-gradient(135deg,rgba(139,69,19,.04),rgba(192,57,43,.04));border-radius:24px;padding:56px 40px;text-align:center;border:1px solid rgba(212,167,106,.2)}
+.lead-capture h2{font-size:32px;font-weight:800;margin-bottom:12px}
+.lead-capture p{color:#8b7355;margin-bottom:24px;font-size:15px}
+.lead-form{display:flex;gap:12px;max-width:500px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.lead-form input{flex:1;min-width:200px;padding:14px 20px;border:1.5px solid #e8ddd0;border-radius:30px;font-size:15px;outline:none;font-family:inherit}
+.lead-form input:focus{border-color:var(--gold)}
+.lead-form button{padding:14px 32px;border-radius:30px;font-size:15px;font-weight:600;border:none;cursor:pointer;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-family:inherit;transition:.3s;white-space:nowrap}
+.lead-form button:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,57,43,.25)}
+.lead-note{font-size:12px;color:#bbb;margin-top:12px}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.blog-card{background:#fff;border-radius:var(--radius);padding:28px 24px;box-shadow:var(--shadow);border:1px solid #f0e6d8;transition:.3s;cursor:pointer}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+.blog-card .b-cat{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.blog-card h4{font-size:16px;font-weight:700;margin-bottom:8px;line-height:1.4}
+.blog-card p{font-size:13px;color:#8b7355;line-height:1.6}
+.blog-card .b-date{font-size:11px;color:#bbb;margin-top:12px}
+.footer{background:#2c2416;color:rgba(255,255,255,.7);padding:60px 0 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.footer h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:16px}
+.footer p,.footer a{font-size:13px;line-height:2;color:rgba(255,255,255,.6);text-decoration:none;display:block}
+.footer a:hover{color:var(--gold)}
+.footer .f-logo{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#2c2416;color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;opacity:0;transition:.4s;z-index:200;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1024px){.users-grid{grid-template-columns:repeat(2,1fr)}.blog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+.hero-grid,.demo-grid,.features-grid,.pricing-grid{grid-template-columns:1fr}
+.users-grid,.blog-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}
+.nav-links{display:none}.section{padding:50px 0}.section-title{font-size:28px}
+.hero{padding:40px 0 50px}.lead-capture{padding:36px 24px}.lead-capture h2{font-size:26px}
+.pricing-card.featured{transform:none}
+}
+@media(max-width:480px){
+.users-grid,.blog-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}
+.nav-right .btn-trial{display:none}.hero-card{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner"><a href="/" class="nav-logo"><span>ð®</span> ChineseTools</a>
+<div class="nav-links"><a href="/">Home</a><a href="/#features">Features</a><a href="/name-generator">Name Generator</a><a href="/calligraphy">Worksheets</a><a href="/translate">Translator</a><a href="/#pricing">Pricing</a><a href="/#blog">Resources</a></div>
+<div class="nav-right"><a href="/name-generator"><button class="btn-trial">Free Trial</button></a><a href="#pricing"><button class="btn-premium">Premium</button></a></div>
+</div></nav>
+<section class="hero" id="hero"><div class="container">
+<div style="text-align:center;margin-bottom:36px"><div style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px">AI-Powered Chinese Learning Tools</div>
+<h1 style="font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.15">Find Their Name.<br>Write Their Story.</h1>
+<p style="color:#8b7355;font-size:17px;margin-top:12px;max-width:550px;margin-left:auto;margin-right:auto">Two essential tools for Chinese language learners, parents, and educators â?powered by AI and traditional Chinese culture.</p>
+</div><div class="hero-grid">
+<div class="hero-card card-name"><div class="card-icon">ð´</div><h2>AI Chinese Baby Name Generator</h2>
+<p class="card-desc">Find the perfect Chinese name with AI-powered recommendations. Includes BaZi (Four Pillars) element analysis, popularity rankings, English translation, and 5 style-based filters.</p>
+<div><span class="tag tag-hot">AI Powered</span><span class="tag tag-popular">BaZi Analysis</span><span class="tag tag-new">5 Styles</span></div>
+<div style="margin-top:14px;font-size:13px;color:#8b7355;line-height:1.8">â?120+ curated names with pinyin Â· â?Birth chart matching Â· â?Popular rankings Â· â?Save favorites</div>
+<a href="/name-generator" style="text-decoration:none"><button class="card-btn">â?Try Name Generator â?/button></a></div>
+<div class="hero-card card-calligraphy"><div class="card-icon">ðï¸?/div><h2>English to Chinese Tracing Worksheet</h2>
+<p class="card-desc">Type any English word and instantly generate a beautiful Tianzige practice sheet. Built-in dictionary, pinyin annotations, and print-ready layout for classroom or home use.</p>
+<div><span class="tag tag-hot">100+ Words</span><span class="tag tag-popular">Tianzige Grid</span><span class="tag tag-new">Printable</span></div>
+<div style="margin-top:14px;font-size:13px;color:#8b7355;line-height:1.8">â?English to Chinese translation Â· â?Faded trace characters Â· â?Pinyin support Â· â?A4 print optimized</div>
+<a href="/calligraphy" style="text-decoration:none"><button class="card-btn">ðï¸?Try Calligraphy Tool â?/button></a></div>
+</div></div></section>
+<section class="section" id="features"><div class="container"><div class="section-label">Why ChineseTools</div>
+<h2 class="section-title">Everything You Need to Learn Chinese</h2><p class="section-sub">Two powerful tools designed by educators for parents, homeschoolers, and Chinese language learners.</p>
+<div class="features-grid">
+<div class="feature-card"><div class="f-icon">ð¤</div><h3>AI-Powered Generation</h3><p>Smart name recommendations based on gender, meaning preferences, and BaZi element analysis.</p></div>
+<div class="feature-card"><div class="f-icon">ð</div><h3>Instant Worksheet Creation</h3><p>Type any English word and get a professional Tianzige practice sheet in seconds.</p></div>
+<div class="feature-card"><div class="f-icon">ð</div><h3>Bilingual Interface</h3><p>Full English and Chinese language support with pinyin annotations for absolute beginners.</p></div>
+<div class="feature-card"><div class="f-icon">â¯ï¸</div><h3>BaZi (Eight Characters)</h3><p>Traditional Chinese astrology-based name matching. Enter a birth date to find element-balanced names.</p></div>
+<div class="feature-card"><div class="f-icon">ð¨ï¸?/div><h3>Print-Ready Layout</h3><p>Every worksheet optimized for A4 printing with clean, professional output for students.</p></div>
+<div class="feature-card"><div class="f-icon">ð</div><h3>Popularity Rankings</h3><p>See trending names and filter by Five Elements for culturally meaningful choices.</p></div>
+</div></div></section>
+<section class="section" style="background:rgba(212,167,106,.04)"><div class="container"><div class="section-label">See It In Action</div>
+<h2 class="section-title">Live Tool Previews</h2><p class="section-sub">Both tools work entirely in your browser â?no sign-up needed to try them.</p><div class="demo-grid">
+<div class="demo-card"><div class="demo-label">ð´ Chinese Name Generator</div><div class="demo-placeholder"><div style="font-size:48px;margin-bottom:12px">ð´</div><p style="font-size:14px;color:var(--accent2);font-weight:600;margin-bottom:8px">Try it live â?<a href="/name-generator" style="color:var(--accent);text-decoration:none">Open Tool</a></p><p>Enter a surname, select gender, choose a style â?get 6 name recommendations instantly.</p></div></div>
+<div class="demo-card"><div class="demo-label">ðï¸?Calligraphy Worksheet Generator</div><div class="demo-placeholder"><div style="font-size:48px;margin-bottom:12px">ðï¸?/div><p style="font-size:14px;color:var(--accent2);font-weight:600;margin-bottom:8px">Try it live â?<a href="/calligraphy" style="color:var(--accent);text-decoration:none">Open Tool</a></p><p>Type "wisdom" and get a Tianzige practice sheet with pinyin and faded trace characters.</p></div></div>
+</div></div></section>
+<section class="section" id="pricing"><div class="container"><div class="section-label">Simple Pricing</div>
+<h2 class="section-title">One Plan for Both Tools</h2><p class="section-sub">Start free, upgrade when you need unlimited access. No hidden fees, no contracts.</p><div class="pricing-grid">
+<div class="pricing-card"><h3>Free</h3><div class="price">$0<span>/mo</span></div><ul class="perks"><li>5 name generations/day</li><li>3 worksheet generations/day</li><li>Basic BaZi analysis</li><li>Standard print layout</li><li>Community support</li></ul><a href="/name-generator" style="text-decoration:none"><button class="buy-btn outline">Get Started Free</button></a></div>
+<div class="pricing-card featured"><h3>Pro</h3><div class="price">$9<span>/mo</span></div><ul class="perks"><li>Unlimited name generations</li><li>Unlimited worksheets</li><li>Advanced BaZi + element analysis</li><li>All grid styles (Tianzige/Mizige/Blank)</li><li>Export as PDF</li><li>Priority email support</li></ul><button class="buy-btn primary">Subscribe to Pro</button></div>
+<div class="pricing-card"><h3>Lifetime</h3><div class="price">$49<span>/once</span></div><ul class="perks"><li>Everything in Pro</li><li>Lifetime access and updates</li><li>Commercial use license</li><li>Custom grid colors</li><li>API access (coming soon)</li><li>Dedicated support</li></ul><button class="buy-btn outline">Buy Lifetime</button></div>
+</div></div></section>
+<section class="section" style="background:rgba(192,57,43,.02)"><div class="container"><div class="section-label">Who It's For</div>
+<h2 class="section-title">Built for the Chinese Learning Community</h2><p class="section-sub">From overseas families to classroom teachers â?serving every step of the Chinese learning journey.</p><div class="users-grid">
+<div class="user-card"><div class="u-icon">ð¶</div><h4>Overseas Parents</h4><p>Give your child a meaningful Chinese name and fun tracing worksheets for weekend Chinese school.</p></div>
+<div class="user-card"><div class="u-icon">ð«</div><h4>Homeschool Educators</h4><p>Generate unlimited practice sheets that reinforce character recognition and writing skills.</p></div>
+<div class="user-card"><div class="u-icon">ð</div><h4>HSK Students</h4><p>Practice writing HSK vocabulary with pinyin and English meaning for complete learning.</p></div>
+<div class="user-card"><div class="u-icon">ð¨âð?/div><h4>Chinese Teachers</h4><p>Save hours of prep time with instant class-ready worksheet creation for warm-ups and homework.</p></div>
+</div></div></section>
+<section class="section"><div class="container"><div class="lead-capture">
+<h2>ð© Get Free Sample Worksheets</h2>
+<p>Sign up for our newsletter and receive 10 printable Chinese character tracing sheets plus a premium name report â?free.</p>
+<form class="lead-form" onsubmit="event.preventDefault();showToast()"><input type="email" placeholder="Your email address" required><button type="submit">Send Free Samples</button></form>
+<p class="lead-note">No spam. Unsubscribe anytime. By subscribing you agree to our Privacy Policy.</p>
+</div></div></section>
+<section class="section" id="blog"><div class="container"><div class="section-label">Learning Resources</div>
+<h2 class="section-title">Chinese Language Blog</h2><p class="section-sub">Tips, guides, and cultural insights for Chinese name selection and character learning.</p><div class="blog-grid">
+<div class="blog-card"><div class="b-cat">Naming Guide</div><h4>How to Choose a Chinese Name: The Complete Guide</h4><p>Learn about surname order, character meanings, tone harmony, and how BaZi influences name selection.</p><div class="b-date">July 15, 2026 Â· 8 min read</div></div>
+<div class="blog-card"><div class="b-cat">Calligraphy</div><h4>Best Way to Practice Chinese Characters at Home</h4><p>Tianzige vs Mizige: which grid type is right for your level? Free printable worksheets included.</p><div class="b-date">July 12, 2026 Â· 5 min read</div></div>
+<div class="blog-card"><div class="b-cat">Culture</div><h4>Understanding the Five Elements in Chinese Names</h4><p>Metal, Wood, Water, Fire, Earth â?how traditional Chinese philosophy shapes name choices.</p><div class="b-date">July 8, 2026 Â· 6 min read</div></div>
+<div class="blog-card"><div class="b-cat">HSK Prep</div><h4>Top 50 Chinese Characters Every Beginner Must Know</h4><p>Practice writing the most essential HSK 1 characters with our guided tracing worksheets.</p><div class="b-date">July 5, 2026 Â· 4 min read</div></div>
+<div class="blog-card"><div class="b-cat">Naming Guide</div><h4>Chinese Name Meanings: A Dictionary of 200+ Characters</h4><p>Comprehensive reference for the most common characters used in Chinese names with cultural context.</p><div class="b-date">July 1, 2026 Â· 12 min read</div></div>
+<div class="blog-card"><div class="b-cat">Teaching</div><h4>10 Fun Chinese Writing Activities for Kids</h4><p>Creative ways to keep young learners engaged with character writing practice at home or in class.</p><div class="b-date">June 28, 2026 Â· 7 min read</div></div>
+</div></div></section>
+
+<!-- ==================== SITE FOOTER ==================== -->
+<footer class="footer-section">
+
+  <!-- Mobile accordion script (inline, minimal) -->
+  <style>
+    .footer-section{background:#f8f6f2;color:#5a4a32;font-family:'Inter','Microsoft YaHei',sans-serif;border-top:1px solid #e8ddd0}
+    .footer-inner{max-width:1200px;margin:0 auto;padding:56px 24px 0}
+    .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+    .footer-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#8b7355;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e8ddd0}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:10px}
+    .footer-col ul li a{font-size:14px;color:#5a4a32;text-decoration:none;transition:color .2s;line-height:1.5;display:inline-block}
+    .footer-col ul li a:hover{color:#c0392b}
+    .accordion-toggle{display:none;width:100%;padding:14px 0;background:none;border:none;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#8b7355;cursor:pointer;text-align:left;font-family:inherit;border-bottom:1px solid #e8ddd0;position:relative}
+    .accordion-toggle::after{content:"+";position:absolute;right:4px;font-size:18px;font-weight:400;transition:transform .3s}
+    .accordion-toggle.active::after{content:"\2212"}
+    .accordion-body{padding:0;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+    .accordion-body.open{max-height:600px;padding:12px 0 4px}
+    .accordion-body ul li{margin-bottom:10px}
+    .accordion-body ul li a{font-size:14px;color:#5a4a32;text-decoration:none;transition:color .2s;line-height:1.5}
+    .accordion-body ul li a:hover{color:#c0392b}
+    .footer-social{display:flex;justify-content:center;gap:20px;padding:32px 0 24px;border-top:1px solid #e8ddd0;margin-top:40px}
+    .footer-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#e8ddd0;color:#5a4a32;font-size:18px;text-decoration:none;transition:all .3s}
+    .footer-social a:hover{background:#c0392b;color:#fff;transform:translateY(-3px)}
+    .footer-brand{text-align:center;padding:0 24px 20px}
+    .footer-brand p{font-size:13px;color:#8b7355;line-height:1.7;max-width:600px;margin:0 auto}
+    .footer-brand .slogan{font-size:14px;font-weight:600;color:#5a4a32;margin-bottom:4px}
+    .footer-bottom{text-align:center;padding:20px 24px;border-top:1px solid #e8ddd0;font-size:12px;color:#bbb}
+    .cookie-notice{background:#2c2416;color:rgba(255,255,255,.85);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:13px}
+    .cookie-notice a{color:var(--gold);text-decoration:underline;cursor:pointer}
+    .cookie-notice button{padding:6px 20px;border-radius:20px;border:none;background:var(--gold);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+    @media(max-width:768px){
+      .footer-grid{grid-template-columns:1fr;gap:0}
+      .footer-col h4{display:none}
+      .accordion-toggle{display:block}
+      .footer-col ul{display:none}
+      .footer-social{gap:14px}
+    }
+    @media(min-width:769px){
+      .accordion-toggle{display:none!important}
+      .footer-col ul{display:block!important}
+    }
+  </style>
+
+  <div class="footer-inner">
+
+    <!-- Desktop grid / Mobile accordion -->
+    <div class="footer-grid" id="footerGrid">
+
+      <!-- Column 1: Core Tools -->
+      <div class="footer-col">
+        <h4>Core Tools</h4>
+        <button class="accordion-toggle" onclick="toggleAccordion(this)" aria-label="Toggle Core Tools">Core Tools</button>
+        <div class="accordion-body"><ul>
+          <li><a href="/name-generator">AI Chinese Baby Name Generator â?BaZi &amp; Five Elements Analysis</a></li>
+          <li><a href="/calligraphy">Chinese Tracing Worksheet Generator â?English to Chinese Tianzige Practice</a></li>
+          <li><a href="#">HSK Printable Worksheets â?Chinese Character Writing Practice for HSK 1â?</a></li>
+          <li><a href="#">Free Sample Downloads â?10 Printable Chinese Tracing Sheets &amp; Premium Name Report</a></li>
+        </ul></div>
+      </div>
+
+      <!-- Column 2: Pricing & License -->
+      <div class="footer-col">
+        <h4>Pricing &amp; License</h4>
+        <button class="accordion-toggle" onclick="toggleAccordion(this)" aria-label="Toggle Pricing">Pricing &amp; License</button>
+        <div class="accordion-body"><ul>
+          <li><a href="#">Monthly Premium Plan â?Unlimited Chinese Name Generations &amp; Printable Worksheets</a></li>
+          <li><a href="#">Yearly Premium Plan â?Save 20% on Unlimited Chinese Learning Tool Access</a></li>
+          <li><a href="#">Teacher Commercial License â?Classroom Use for Chinese Language Educators</a></li>
+          <li><a href="#">Etsy Seller License â?Commercial Rights for Chinese Worksheet Digital Products</a></li>
+        </ul></div>
+      </div>
+
+      <!-- Column 3: Blog Resources -->
+      <div class="footer-col">
+        <h4>Blog Resources</h4>
+        <button class="accordion-toggle" onclick="toggleAccordion(this)" aria-label="Toggle Resources">Blog Resources</button>
+        <div class="accordion-body"><ul>
+          <li><a href="#">Chinese Baby Naming Guides â?How to Choose a Meaningful Chinese Name with BaZi</a></li>
+          <li><a href="#">Mandarin Learning Printables â?Free Chinese Character Tracing &amp; Writing Worksheets</a></li>
+          <li><a href="#">HSK Writing Tips â?Improve Your Chinese Handwriting for HSK Exam Success</a></li>
+          <li><a href="#">Homeschool Chinese Resources â?Complete Curriculum for Teaching Chinese at Home</a></li>
+        </ul></div>
+      </div>
+
+      <!-- Column 4: Legal & Support -->
+      <div class="footer-col">
+        <h4>Legal &amp; Support</h4>
+        <button class="accordion-toggle" onclick="toggleAccordion(this)" aria-label="Toggle Support">Legal &amp; Support</button>
+        <div class="accordion-body"><ul>
+          <li><a href="#">Privacy Policy â?How We Protect Your Data on ChineseTools</a></li>
+          <li><a href="#">Terms of Service â?Conditions for Using Chinese Name Generator &amp; Worksheet Tools</a></li>
+          <li><a href="#">Cookie Policy â?Understanding Cookies on Our Chinese Learning Platform</a></li>
+          <li><a href="#">Commercial License â?Purchase Commercial Rights for Chinese Worksheets &amp; Name Reports</a></li>
+          <li><a href="#">FAQ â?Frequently Asked Questions About Chinese Baby Naming &amp; Character Practice</a></li>
+          <li><a href="#">Contact Us â?Get Support for AI Chinese Name Generator &amp; Tracing Worksheets</a></li>
+          <li><a href="#">Refund Policy â?Money-Back Guarantee for Premium Chinese Learning Tools</a></li>
+        </ul></div>
+      </div>
+
+    </div><!-- /footer-grid -->
+
+    <!-- Social Icons -->
+    <div class="footer-social">
+      <a href="#" aria-label="Pinterest" title="Chinese name ideas on Pinterest">ð</a>
+      <a href="#" aria-label="Facebook" title="Join our Chinese learning community on Facebook">ð</a>
+      <a href="#" aria-label="Instagram" title="Chinese calligraphy inspiration on Instagram">ð¸</a>
+      <a href="#" aria-label="TikTok" title="Chinese character writing tips on TikTok">ðµ</a>
+    </div>
+
+    <!-- Brand SEO slogan -->
+    <div class="footer-brand">
+      <p class="slogan">ChineseTools â?AI-Powered Chinese Baby Name Generator &amp; English to Chinese Tracing Worksheet Creator</p>
+      <p>Helping overseas parents, homeschool educators, HSK students, and Chinese language teachers find meaningful Chinese names and create printable Tianzige calligraphy practice sheets since 2024.</p>
+    </div>
+
+  </div><!-- /footer-inner -->
+
+  <!-- Copyright + Cookie notice -->
+  <div class="cookie-notice" id="cookieNotice">
+    <span>ðª This website uses cookies to improve your Chinese learning experience. By continuing you accept our <a href="#">Cookie Policy</a>.</span>
+    <button onclick="document.getElementById('cookieNotice').style.display='none'">Accept</button>
+  </div>
+
+  <div class="footer-bottom">
+    <p>Â© 2026 ChineseTools â?AI Chinese Baby Name Generator &amp; English to Chinese Tracing Worksheet Generator. All rights reserved.</p>
+  </div>
+
+</footer>
+
+<div class="toast" id="toastMsg"></div>
+
+<script>
+function showToast() {
+  var el = document.getElementById("toastMsg");
+  if (!el) return;
+  el.textContent = "? Thank you! Your free samples are on the way.";
+  el.classList.add("show");
+  setTimeout(function() { el.classList.remove("show"); }, 3000);
+}
+
+<script>
+function toggleAccordion(btn) {
+  var body = btn.nextElementSibling;
+  if (!body || !body.classList) return;
+  var isOpen = body.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-body').forEach(function(el) { el.classList.remove('open'); });
+  document.querySelectorAll('.accordion-toggle').forEach(function(el) { el.classList.remove('active'); });
+  if (!isOpen) {
+    body.classList.add('open');
+    btn.classList.add('active');
+  }
+}
+</script>
+
+</body>
+</html>
+
